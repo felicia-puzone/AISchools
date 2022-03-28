@@ -1,8 +1,3 @@
-# Install OpenCV and Requirements
-pip uninstall imgaug -y
-pip install imgaug==0.2.5
-apt-get -qq install -y libsm6 libxext6 && pip install -q -U opencv-python
-
 import cv2
 import numpy as np
 
