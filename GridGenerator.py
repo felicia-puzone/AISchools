@@ -57,6 +57,8 @@ def pixxelate(img, sample_size, palette):
             avg = color_avg(img_tmp)
 
       #avg_flatten = avg.reshape(avg.shape[0]*avg.shape[1], 3)
+      
+        palette_color = np.array([230,231,215])
   
         if(avg.shape[0]>0 and avg.shape[1] >0 and avg.shape[2] > 0):
             palette_color = palette_choose(palette, avg[0][0])
