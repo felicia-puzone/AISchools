@@ -40,7 +40,7 @@ def palette_choose(palette, pixel):
   return palette[minIndex]
 
 
-def pixxelate(img, sample_size, palette):
+"""def pixxelate(img, sample_size, palette):
     (h, w) = img.shape[:2]
 
     (stepW, stepH) = ((w // sample_size) + 1, (h // sample_size) +1)
@@ -64,6 +64,26 @@ def pixxelate(img, sample_size, palette):
             palette_color = palette_choose(palette, avg[0][0])
 
         avg = np.full(avg.shape, [palette_color[0], palette_color[1], palette_color[2]], dtype = np.uint8)
+
+        img_res[i*stepH :i*stepH + stepH, j* stepW :j* stepW + stepW] = avg
+
+    return img_res """
+    
+def pixxelate(img, sample_size):
+    (h, w) = img.shape[:2]
+
+    (stepW, stepH) = ((w // sample_size) + 1, (h // sample_size) +1)
+
+    img_res = np.empty(img.shape, dtype = np.uint8)
+
+  ## 1 - prendi una sottomatrice stepW * stepH * 3 dall'array di partenza
+  ## 2 - calcola la media (o qualsiasi altra funzione) dei colori
+  ## 3 - inserisci nelle posizioni corrispondenti dell'immagine risultato il colore calcolato
+
+    for i in range(sample_size):
+        for j in range(sample_size):
+            img_tmp = img[i*stepH :i*stepH + stepH, j* stepW :j* stepW + stepW]
+            avg = color_avg(img_tmp)
 
         img_res[i*stepH :i*stepH + stepH, j* stepW :j* stepW + stepW] = avg
 
