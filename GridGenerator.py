@@ -7,6 +7,8 @@ import numpy as np
 
 def color_avg(img):
   img_reshape = img.reshape(img.shape[0]*img.shape[1], 3)
+  
+  
   avg_ch1 = img_reshape[:,0].sum()//img_reshape.shape[0]
   avg_ch1 = avg_ch1.astype('uint8')
 
@@ -44,8 +46,6 @@ def palette_choose(palette, pixel):
   return palette[minIndex]
 
 
-sample_size = 32
-
 def pixxelate(img, sample_size, palette):
   (h, w) = img.shape[:2]
 
@@ -61,12 +61,10 @@ def pixxelate(img, sample_size, palette):
 
   for i in range(sample_size):
     for j in range(sample_size):
-      img_tmp = img[i*stepH :i*stepH + stepH, j* stepW :j* stepW + stepW]
-      avg = color_avg(img_tmp)
+      if(i*stepH + stepH <= img.shape[0] and j* stepW + stepW <= img.shape[1]):
+        img_tmp = img[i*stepH :i*stepH + stepH, j* stepW :j* stepW + stepW]
+        avg = color_avg(img_tmp)
 
-      #avg_flatten = avg.reshape(avg.shape[0]*avg.shape[1], 3)
-  
-      if(avg.shape[0]>0 and avg.shape[1] >0 and avg.shape[2] > 0):
         palette_color = palette_choose(palette, avg[0][0])
 
         avg = np.full(avg.shape, [palette_color[0], palette_color[1], palette_color[2]], dtype = np.uint8)
@@ -74,5 +72,6 @@ def pixxelate(img, sample_size, palette):
         img_res[i*stepH :i*stepH + stepH, j* stepW :j* stepW + stepW] = avg
 
   return img_res
+
 
 
