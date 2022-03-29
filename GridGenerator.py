@@ -21,12 +21,10 @@ def color_avg(img):
   res = np.full(img.shape, [avg_ch1, avg_ch2, avg_ch3], dtype = np.uint8)
   return res
   
+    
 def color_distance(color1, color2):
     
-  color1 = color1.astype(np.uint16)
-  color2 = color2.astype(np.uint16)
-
-  distance = (color1[0] - color2[0])**2 + (color1[1] - color2[1])**2 + (color1[2] - color2[2])**2
+  distance = np.abs(color1[0] - color2[0]) + np.abs(color1[1] - color2[1]) + np.abs(color1[2] - color2[2])
   return distance
 
 
