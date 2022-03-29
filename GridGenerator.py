@@ -21,8 +21,12 @@ def color_avg(img):
   
 def color_distance(color1, color2):
     
+  distance = 0
+  distance = distance.astype(np.uint16)
+
   distance = (color1[0] - color2[0])**2 + (color1[1] - color2[1])**2 + (color1[2] - color2[2])**2
-  return distance.astype(np.float32)
+  return distance
+
 
 def palette_choose(palette, pixel):
 
