@@ -24,6 +24,11 @@ def color_avg(img):
     
 def color_distance(color1, color2):
     
+  # Converto da uint a int perchè altrimenti con le differenze se viene un numero negativo sfora la codifica e va in overflow
+
+  color1 = color1.astype(np.int16)
+  color2 = color2.astype(np.int16)
+
   distance = np.abs(color1[0] - color2[0]) + np.abs(color1[1] - color2[1]) + np.abs(color1[2] - color2[2])
   return distance
 
