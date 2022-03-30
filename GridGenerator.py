@@ -66,7 +66,8 @@ def pixxelate(img, sample_size, palette):
     for j in range(sample_size):
       if(i*stepH + stepH <= img.shape[0] and j* stepW + stepW <= img.shape[1]):
         img_tmp = img[i*stepH :i*stepH + stepH, j* stepW :j* stepW + stepW]
-        avg = color_avg(img_tmp)
+        #avg = color_avg(img_tmp)
+        avg = img_tmp
 
         palette_color = palette_choose(palette, avg[0][0])
 
