@@ -156,9 +156,9 @@ def palette_extractor(img):
 
   #Diminuisco il numero di colori a step di 5 (molto aleatorio)
 
-  step = color_unique.shape[0] // 30
+  #step = color_unique.shape[0] // 30
 
-  color_unique = color_unique[0:color_unique.shape[0]:step]
+  #color_unique = color_unique[0:color_unique.shape[0]:step]
 
   #Ottengo una palette di colori RGB in uscita
   return color_unique
