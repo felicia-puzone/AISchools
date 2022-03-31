@@ -144,10 +144,10 @@ def my_kmeans(img_hsv):
 def palette_extractor(img):
 
   #Conversione dell'immagine in HSV
-  img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+  #img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
   #Applicazione dell'algoritmo di clustering 
-  img_out_rgb = my_kmeans(img)
+  img_out_rgb = basic_kmeans(img,30)
 
   #Estraggo i colori unici dall'immagine
   img_flatten = img_out_rgb.reshape(img_out_rgb.shape[0]*img_out_rgb.shape[1], 3)
@@ -156,9 +156,9 @@ def palette_extractor(img):
 
   #Diminuisco il numero di colori a step di 5 (molto aleatorio)
 
-  #step = color_unique.shape[0] // 30
+  step = color_unique.shape[0] // 30
 
-  #color_unique = color_unique[0:color_unique.shape[0]:step]
+  color_unique = color_unique[0:color_unique.shape[0]:step]
 
   #Ottengo una palette di colori RGB in uscita
   return color_unique
