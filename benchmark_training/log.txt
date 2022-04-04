@@ -1,0 +1,18 @@
+Processo:
+1) Siccome i modelli pretrained forniscono solo lo state_dict del generator G_A, creo una funzione load_networks
+
+
+
+
+PROVA 1
+Model : CycleGAN
+Pretrained: No
+Epoch: 1
+Epoch_Decay: 1
+Dataset: 300->A - 300->B
+
+PROVA 2
+Model:CycleGAN
+Pretrained: StateDict Cartoon -> PixelArt
+Epoch: 1
+Epoch_Decay: 1
