@@ -198,19 +198,19 @@ class BaseModel(ABC):
                     self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))
                 net.load_state_dict(state_dict)
 
-    ############# MOD ####################
+     ############# MOD ####################
     # Carica uno state dict G_A da un path personalizzato
 
-    def load_network_init(self, path):
+    def load_network_init(self, path_name):
         for name in self.model_names:
             if(name == 'G_A'):
                 if isinstance(name, str):
-                    #load_filename = '%s_net_%s.pth' % (epoch, name)
-                    load_path = path
+                    load_filename = path_name
+                    load_path = os.path.join('./stateDict', load_filename)
                     net = getattr(self, 'net' + name)
                     if isinstance(net, torch.nn.DataParallel):
                         net = net.module
-                    print('Caricamento di %s' % load_path)
+                    print('Caricamento di G_A da: %s' % load_path)
                     # if you are using PyTorch newer than 0.4 (e.g., built from
                     # GitHub source), you can remove str() on self.device
                     state_dict = torch.load(load_path, map_location=str(self.device))
@@ -221,7 +221,6 @@ class BaseModel(ABC):
                     for key in list(state_dict.keys()):  # need to copy keys here because we mutate in loop
                         self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))
                     net.load_state_dict(state_dict)
-                    print('Caricato')
 
     #######################################
 
