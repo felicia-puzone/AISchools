@@ -19,11 +19,11 @@ COLOR_HUES =	{
 }
 
 COLOR_SAT =	{
-  "1": [0,51],  
-  "2": [51,102],
+  "1": [0,102],  
+  #"2": [51,102],
   "3": [102,153],
-  "4": [153,204],
-  "5": [204,255],
+  #"4": [153,204],
+  "5": [153,255],
 }
 
 # DICTIONARY SCHEMA BRIGHTNESS
@@ -99,41 +99,59 @@ def val_counter(img):
   #print('Numero cluster val:', k)
   return k
 
-def basic_kmeans(channel, k):
-  Z = channel.reshape(-1)
+def k_means(img, k):
+    
+  shape = img.shape
 
-  Z = np.float32(Z)
+  if(img.ndim == 3):
+    img = np.float32(img).reshape((-1, 3))
 
-  criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+  #Per ottimizzare il processo scelgo un criterio con Halt=10, epsilon=0.01 e 5 tentativi
 
-  K = k
-  ret,label,center=cv2.kmeans(Z,K,None,criteria,10,cv2.KMEANS_RANDOM_CENTERS)
+  criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 0.01)
 
+  ret, label, center = cv2.kmeans(img, k, None, criteria, 5, cv2.KMEANS_RANDOM_CENTERS)
   center = np.uint8(center)
-  res = center[label.flatten()]
-
-  channel_out = res.reshape(channel.shape)
-  return channel_out
-
+  result = center[label.flatten()]
+  #print(label.ravel())
+  result = result.reshape(shape)
+  return result
 
 def my_kmeans(img_hsv):
-
+    
   K_h = hue_counter(img_hsv)
   K_s = sat_counter(img_hsv)
   K_v = val_counter(img_hsv)
 
+  print(K_h, K_s, K_v)
+
   (H, S, V) = cv2.split(img_hsv)
 
   # HUE #
-  H_k = basic_kmeans(H, K_h)
+
+  Z = H.reshape(-1)
+  Z = np.float32(Z)
+  K = K_h
+  H_k= k_means(Z, K_h)
+  H_k = H_k.reshape(H.shape)
 
   # SAT #
-  S_k = basic_kmeans(S, K_s)
+
+  Z = S.reshape(-1)
+  Z = np.float32(Z)
+  K = K_s
+  S_k= k_means(Z, K_s)
+  S_k = S_k.reshape(S.shape)
+
 
   # VAL #
-  V_k = basic_kmeans(V, K_v)
 
-  #Merge canali
+  Z = V.reshape(-1)
+  Z = np.float32(Z)
+  K = K_v
+  V_k= k_means(Z, K_v)
+  V_k = V_k.reshape(V.shape)
+
   out = cv2.merge([H_k, S_k, V_k])
 
   out_rgb = cv2.cvtColor(out, cv2.COLOR_HSV2RGB)
@@ -142,17 +160,23 @@ def my_kmeans(img_hsv):
 
 
 def palette_extractor(img):
-
+    
   #Conversione dell'immagine in HSV
   #img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
   #Applicazione dell'algoritmo di clustering 
-  img_out_rgb = basic_kmeans(img,30)
+  img_out_rgb = k_means(img,30)
 
   #Estraggo i colori unici dall'immagine
   img_flatten = img_out_rgb.reshape(img_out_rgb.shape[0]*img_out_rgb.shape[1], 3)
 
   color_unique = np.unique(img_flatten, axis=0)
+
+  #Diminuisco il numero di colori a step di 5 (molto aleatorio)
+
+  step = color_unique.shape[0] // 30
+
+  color_unique = color_unique[0:color_unique.shape[0]:step]
 
   #Ottengo una palette di colori RGB in uscita
   return color_unique
