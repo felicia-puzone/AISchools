@@ -20,3 +20,4 @@ python train.py --dataroot ./datasets/coco2pixelart --name pixelart_model --mode
 
 GPU: nvidia 2080
 
+git p
