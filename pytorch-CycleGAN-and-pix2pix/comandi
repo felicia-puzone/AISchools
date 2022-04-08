@@ -1,4 +1,0 @@
-pip install -r requirements.txt
-
-python train.py --dataroot ./datasets/apple2orange --name apple2orange_model --model cycle_gan
-
