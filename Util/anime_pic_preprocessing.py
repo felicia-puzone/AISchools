@@ -71,6 +71,7 @@ Ridimensiono tutto a 256 x 256px
 """
 
 def resize(img, dim):
+  #NEAREST : per le pixel arr BILINEAR : per l'altro dominio
   img_resized = cv2.resize(img, dim, interpolation = cv2.INTER_NEAREST)
   return img_resized
   
