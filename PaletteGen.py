@@ -41,7 +41,7 @@ def hue_present(img, hue):
   (H, S, V) = cv2.split(img)
   hist = cv2.calcHist([H],[0],None,[180],[0,180])
 
-  if((hist[hue[0]:hue[1]].max() / total) > 0.005):
+  if((hist[hue[0]:hue[1]].max() / total) > 0.0025):
     return True
   else:
     return False
