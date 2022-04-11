@@ -54,7 +54,7 @@ def pixxelate(img, sample_size, palette):
 
   (stepW, stepH) = ((w // sample_size) + 1, (h // sample_size) +1)
 
-  print (stepW, stepH)
+  #print (stepW, stepH)
 
   img_res = np.empty(img.shape, dtype = np.uint8)
 
