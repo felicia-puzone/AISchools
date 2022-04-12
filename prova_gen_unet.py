@@ -10,7 +10,7 @@ import cv2
 
 
 from PaletteGen import palette_extractor
-from GridGenerator import pixxelate
+from Downsampling import pixxelate
 
 
 path = './Pictures/cat.png'
