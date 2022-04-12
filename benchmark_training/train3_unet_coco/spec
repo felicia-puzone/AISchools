@@ -6,4 +6,4 @@ pretrained: no
 generatore: unet_128
 epochs: 50 + 50 decay
 
-comando: python train.py --dataroot ./datasets/coco2pixelart --name pixelart_model2 --model cycle_gan --netG unet_128  --n_epochs 50 --n_epochs_decay 50 --batch_size 16 --preprocess none --save_epoch_freq 25
+comando: python train.py --dataroot ./datasets/cartoon2pixel --name pixelart_model_cartoon_unet256 --model cycle_gan --netG unet_256  --n_epochs 100 --n_epochs_decay 50 --batch_size 32 --preprocess none --save_epoch_freq 50

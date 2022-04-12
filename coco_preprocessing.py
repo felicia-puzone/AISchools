@@ -13,7 +13,7 @@ import numpy as np
 
 import os
 
-directory = './val2017/'
+directory = './pytorch-CycleGAN-and-pix2pix/datasets/cartoon2pixel/trainA'
 
 #Preparo una lista di img di input raccolte dalla cartella PixelArt_Screenshot
 
@@ -63,7 +63,7 @@ def resize(img, dim):
   return img_resized
   
 
-out_path = './Dataset/trainA'
+out_path = './pytorch-CycleGAN-and-pix2pix/datasets/cartoon2pixel'
 
 #plt.imshow(list_screenshots[0])
 #plt.show()
@@ -72,7 +72,7 @@ for i in range(len(list_screenshots)):
 
     cropped_img = list_screenshots[i]
 
-    cropped_img = square(cropped_img)
+    #cropped_img = square(cropped_img)
 
     cropped_img = resize(cropped_img, (256,256))
     filename = out_path + str(i) + '.png'
