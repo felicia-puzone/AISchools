@@ -119,7 +119,7 @@ def k_means(img, k):
   return result
 
 def my_kmeans(img):
-  hue_factor = 1.5
+  hue_factor = 2
 
   img_hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 

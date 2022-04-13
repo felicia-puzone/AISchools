@@ -13,7 +13,7 @@ from PaletteGen import palette_extractor
 from Downsampling import pixxelate
 
 
-path = './Pictures/cat.png'
+path = './Pictures/venz.PNG'
 
 
 input_img= cv2.imread(path, cv2.IMREAD_COLOR)
