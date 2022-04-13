@@ -149,7 +149,6 @@ norm_layer = get_norm_layer(norm_type='instance')
 net = UnetGenerator(input_nc=3, output_nc=3, num_downs=8, ngf=64, norm_layer=norm_layer, use_dropout=False)
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-#device = torch.device("cpu")    #PATCH FELICIA
 gpu_ids = [0] if torch.cuda.is_available() else []
 
 state_dict = torch.load('./unet-256-cartoon(150).pth', map_location=device)
@@ -169,7 +168,9 @@ transform_A = transforms.Compose([
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
+#Effettuo un resize altrimenti l'input della rete non è compatibile
 input_img = cv2.resize(input_img, (256,256), interpolation = cv2.INTER_AREA)
+
 A_img = transform_A(input_img)
 A_img = A_img.unsqueeze(0).to(device)
 

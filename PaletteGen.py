@@ -71,33 +71,33 @@ def hue_counter(img):
   k = 0
 
   for key in COLOR_HUES:
-    print(key, hue_present(img, COLOR_HUES[key]))
+    #print(key, hue_present(img, COLOR_HUES[key]))
     if(hue_present(img, COLOR_HUES[key])):
       k += 1
 
-  print('Numero cluster hue:', k)
+  #print('Numero cluster hue:', k)
   return k
 
 def sat_counter(img):
   k = 0
 
   for key in COLOR_SAT:
-    print(key, sat_present(img, COLOR_SAT[key]))
+    #print(key, sat_present(img, COLOR_SAT[key]))
     if(sat_present(img, COLOR_SAT[key])):
       k += 1
 
-  print('Numero cluster saturation:', k)
+  #print('Numero cluster saturation:', k)
   return k
 
 def val_counter(img):
   k = 0
 
   for key in COLOR_VAL:
-    print(key, val_present(img, COLOR_VAL[key]))
+    #print(key, val_present(img, COLOR_VAL[key]))
     if(val_present(img, COLOR_VAL[key])):
       k += 1
 
-  print('Numero cluster val:', k)
+  #print('Numero cluster val:', k)
   return k
 
 def k_means(img, k):
