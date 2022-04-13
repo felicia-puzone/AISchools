@@ -119,7 +119,7 @@ def k_means(img, k):
   return result
 
 def my_kmeans(img):
-  hue_factor = 2
+  hue_factor = 1.5
 
   img_hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
@@ -131,10 +131,7 @@ def my_kmeans(img):
   return img_rgb_out
 
 
-def palette_extractor(img):
-    
-  #Conversione dell'immagine in HSV
-  img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+def palette_extractor(img):  
 
   #Applicazione dell'algoritmo di clustering 
   img_out_rgb = my_kmeans(img)
