@@ -51,7 +51,7 @@ def sat_present(img, sat):
   (H, S, V) = cv2.split(img)
   hist = cv2.calcHist([S],[0],None,[256],[0,255])
 
-  if((hist[sat[0]:sat[1]].max() / total) > 0.003):
+  if((hist[sat[0]:sat[1]].max() / total) > 0.008):
     return True
   else:
     return False
@@ -61,54 +61,55 @@ def val_present(img, val):
   (H, S, V) = cv2.split(img)
   hist = cv2.calcHist([V],[0],None,[256],[0,255])
 
-  if((hist[val[0]:val[1]].max() / total) > 0.003):
+  if((hist[val[0]:val[1]].max() / total) > 0.008):
     return True
   else:
     return False
+
 
 def hue_counter(img):
   k = 0
 
   for key in COLOR_HUES:
-    #print(key, hue_present(img, COLOR_HUES[key]))
+    print(key, hue_present(img, COLOR_HUES[key]))
     if(hue_present(img, COLOR_HUES[key])):
       k += 1
 
-  #print('Numero cluster hue:', k)
+  print('Numero cluster hue:', k)
   return k
 
 def sat_counter(img):
   k = 0
 
   for key in COLOR_SAT:
-    #print(key, sat_present(img, COLOR_SAT[key]))
+    print(key, sat_present(img, COLOR_SAT[key]))
     if(sat_present(img, COLOR_SAT[key])):
       k += 1
 
-  #print('Numero cluster saturation:', k)
+  print('Numero cluster saturation:', k)
   return k
 
 def val_counter(img):
   k = 0
 
   for key in COLOR_VAL:
-    #print(key, val_present(img, COLOR_VAL[key]))
+    print(key, val_present(img, COLOR_VAL[key]))
     if(val_present(img, COLOR_VAL[key])):
       k += 1
 
-  #print('Numero cluster val:', k)
+  print('Numero cluster val:', k)
   return k
 
 def k_means(img, k):
-    
+
   shape = img.shape
 
   if(img.ndim == 3):
     img = np.float32(img).reshape((-1, 3))
 
-  #Per ottimizzare il processo scelgo un criterio con Halt=10, epsilon=0.01 e 5 tentativi
+  #Per ottimizzare il processo rispetto ai valori da documentazione scelgo un criterio con Halt=15, epsilon=0.01 e 5 tentativi
 
-  criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 0.01)
+  criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 0.01)
 
   ret, label, center = cv2.kmeans(img, k, None, criteria, 5, cv2.KMEANS_RANDOM_CENTERS)
   center = np.uint8(center)
@@ -117,50 +118,17 @@ def k_means(img, k):
   result = result.reshape(shape)
   return result
 
-def my_kmeans(img_hsv):
-    
-  num_colors = hue_counter(img_hsv)*2
-  
-  #K_h = hue_counter(img_hsv)
-  #K_s = sat_counter(img_hsv)
-  #K_v = val_counter(img_hsv)
+def my_kmeans(img):
+  hue_factor = 2
 
+  img_hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
-  #(H, S, V) = cv2.split(img_hsv)
+  num_colors = np.ceil(hue_counter(img_hsv)*hue_factor)
+  num_colors = int(num_colors)
+  #print("Num colors:", num_colors)
+  img_rgb_out= k_means(img, num_colors)  
 
-  # HUE #
-
-  #Z = H.reshape(-1)
-  #Z = np.float32(Z)
-  #K = K_h
-  #H_k= k_means(Z, K_h)
-  #H_k = H_k.reshape(H.shape)
-
-  # SAT #
-
-  #Z = S.reshape(-1)
-  #Z = np.float32(Z)
-  #K = K_s
-  #S_k= k_means(Z, K_s)
-  #S_k = S_k.reshape(S.shape)
-
-
-  # VAL #
-
-  #Z = V.reshape(-1)
-  #Z = np.float32(Z)
-  #K = K_v
-  #V_k= k_means(Z, K_v)
-  #V_k = V_k.reshape(V.shape)
-
-  #out = cv2.merge([H_k, S_k, V_k])
-  
-  img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
-
-  out_rgb= k_means(img_rgb, num_colors)
-  #out_rgb = cv2.cvtColor(out, cv2.COLOR_HSV2RGB)
-
-  return out_rgb
+  return img_rgb_out
 
 
 def palette_extractor(img):
