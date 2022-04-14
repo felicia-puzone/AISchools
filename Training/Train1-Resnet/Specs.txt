@@ -1,0 +1,13 @@
+TRAIN CON RESNET
+Dataset: coco2pixelart (1000 -1000)
+Modello: CycleGAN
+Pretrained: yes -> baseline_G_A.pth
+Generator: Resnet-9
+Epochs: 150
+norm: instance norm
+batch size 16
+dropout : yes
+
+
+
+
