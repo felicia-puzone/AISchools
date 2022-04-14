@@ -36,7 +36,7 @@ if __name__ == '__main__':
     total_iters = 0                # the total number of training iterations
 
     ##########################
-    #model.load_network_init(opt.name_state_dict_init)
+    model.load_network_init(opt.name_state_dict_init)
     ##########################
 
     for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>

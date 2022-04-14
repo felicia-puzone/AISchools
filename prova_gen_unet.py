@@ -13,13 +13,11 @@ from PaletteGen import palette_extractor
 from Downsampling import pixxelate
 
 
-path = './Pictures/venz.PNG'
+path = './Pictures/venz.JPG'
 
 
 input_img= cv2.imread(path, cv2.IMREAD_COLOR)
 input_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2RGB)
-#print(palette=palette_extractor(input_img))
-
 
 
 class UnetGenerator(nn.Module):

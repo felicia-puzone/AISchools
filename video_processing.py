@@ -4,6 +4,8 @@ import cv2 as cv
 from PaletteGen import palette_extractor
 from Downsampling import pixxelate
 
+from prova_gen_resnet import resnet_process
+
 
 ######### Registrazione da webcam #############
 
@@ -43,6 +45,7 @@ while cap.isOpened():
         break
 
     palette = palette_extractor(frame) 
+    frame = resnet_process(frame)
     frame = pixxelate(frame, 128, palette)
             
             # write the flipped frame
